@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String       @id @default(uuid())
+  fullName     String
+  username     String       @unique
+  email        String       @unique
+  profilePic   String?
+  banner       String?
+  refreshToken String?
+  password     String
+  bio          String       @default("Hi I am a twitter user")
+  isVerified   Boolean      @default(false)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  following    Following[]  @relation("WhoIFollow")
+  followers    Following[]  @relation("WhoFollowMe")
+  Tweet        Tweet[]
+  Replytweet   Replytweet[]
+  Likestweet   Likestweet[]
+  LikesReply   LikesReply[]
+}
+
+model Following {
+  id          String @id @default(uuid())
+  followersId String
+  followers   User   @relation("WhoFollowMe", references: [id], fields: [followersId])
+  followingId String
+  following   User   @relation("WhoIFollow", references: [id], fields: [followingId])
+}
+
+model Tweet {
+  id         String       @id @default(uuid())
+  content    String
+  image      String?
+  video      String?
+  authorId   String
+  author     User         @relation(references: [id], fields: [authorId])
+  Replytweet Replytweet[]
+  Likestweet Likestweet[]
+}
+
+model Replytweet {
+  id         String       @id @default(uuid())
+  content    String
+  tweetId    String
+  tweet      Tweet        @relation(references: [id], fields: [tweetId])
+  userId     String
+  user       User         @relation(references: [id], fields: [userId])
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  LikesReply LikesReply[]
+}
+
+model Likestweet {
+  id      String @id @default(uuid())
+  tweetId String
+  tweet   Tweet  @relation(references: [id], fields: [tweetId])
+  userId  String
+  user    User   @relation(references: [id], fields: [userId])
+}
+
+model LikesReply {
+  id      String     @id @default(uuid())
+  replyId String
+  reply   Replytweet @relation(references: [id], fields: [replyId])
+  userId  String
+  user    User       @relation(references: [id], fields: [userId])
+}
