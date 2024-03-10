@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
-import { asyncHandler } from "../utils/AsyncHandler";
-import { ApiResponse } from "../utils/ApiResponse";
-import { registerUserSchema } from "../utils/ZodValidators";
+import { asyncHandler } from "../../utils/AsyncHandler";
+import { ApiResponse } from "../../utils/ApiResponse";
+import { registerUserSchema } from "../../utils/ZodValidators";
 import { PrismaClient } from "@prisma/client";
-import { ApiError } from "../utils/ApiError";
-import { uploadOnCloudinary } from "../utils/uploadToCloudinary";
-import { deleteFromCloudinary } from "../utils/deleteFromCloudinary";
+import { ApiError } from "../../utils/ApiError";
+import { uploadOnCloudinary } from "../../utils/uploadToCloudinary";
+import { deleteFromCloudinary } from "../../utils/deleteFromCloudinary";
 import {
     generateAccessToken,
     generateRefreshToken,
-} from "../utils/generateTokens";
-import { generateHashPassword } from "../utils/hashPassword";
+} from "../../utils/generateTokens";
+import { generateHashPassword } from "../../utils/hashPassword";
 
 const prisma = new PrismaClient();
 

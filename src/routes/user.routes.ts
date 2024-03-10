@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { createUser } from "../controllers/user-controllers/user.controller.register";
 import { upload } from "../middlewares/multer.middleware";
+import { login } from "../controllers/user-controllers/user.controller.login";
 const userRouter = Router();
 
 userRouter.route("/register").post(
@@ -10,4 +11,6 @@ userRouter.route("/register").post(
     ]),
     createUser
 );
+
+userRouter.route("/login").post(login);
 export { userRouter };
