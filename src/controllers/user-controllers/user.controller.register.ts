@@ -132,10 +132,10 @@ const createUser = asyncHandler(async (req: Request, res: Response) => {
     };
     return res
         .status(200)
-        .cookie("Access token", accessToken, options)
-        .cookie("Refresh token", refreshToken, options)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
         .json(
-            new ApiResponse(200, "Exposed endpoint", {
+            new ApiResponse(200, "User created successfully", {
                 userdata: userSaved,
                 accessToken: accessToken,
             })
