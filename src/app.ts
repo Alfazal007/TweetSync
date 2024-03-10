@@ -26,10 +26,7 @@ app.use(
 app.use(express.static("public")); // static files which anyone can access
 app.use(cookieParser()); // get cookies from browser and also to set it
 
-function startServer() {
-    const port = process.env.PORT || 8000;
-    app.listen(port, () => {
-        console.log(`Server running on port ${port}`);
-    });
-}
-export { startServer };
+import { userRouter } from "./routes/user.routes";
+app.use("/api/v1/users", userRouter);
+
+export { app };
