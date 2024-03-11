@@ -45,6 +45,14 @@ const login = asyncHandler(async (req: Request, res: Response) => {
         email: userFromDb.email,
     });
     const refreshToken = generateRefreshToken(userFromDb.id);
+    await prisma.user.update({
+        where: {
+            id: userFromDb.id,
+        },
+        data: {
+            refreshToken: refreshToken,
+        },
+    });
     const options = {
         httpOnly: true,
         secure: true,

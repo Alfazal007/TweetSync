@@ -8,6 +8,7 @@ import { updateBio } from "../controllers/user-controllers/update-user/user.cont
 import { updateProfile } from "../controllers/user-controllers/update-user/user.controller.profile";
 import { updateBanner } from "../controllers/user-controllers/update-user/user.controller.banner";
 import { changePassword } from "../controllers/user-controllers/update-user/user.controller.changePassword";
+import { logout } from "../controllers/user-controllers/user.controller.logout";
 const userRouter = Router();
 
 userRouter.route("/register").post(
@@ -29,4 +30,5 @@ userRouter
     .put(isLoggedIn, upload.single("banner"), updateBanner);
 
 userRouter.route("/change-password").put(isLoggedIn, changePassword);
+userRouter.route("/logout").post(isLoggedIn, logout);
 export { userRouter };
