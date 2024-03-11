@@ -6,6 +6,7 @@ import { emailType, usernameType } from "../../utils/ZodValidators";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { generateHashPassword } from "../../utils/hashPassword";
 import { ApiResponse } from "../../utils/ApiResponse";
+import { sendMail } from "../../utils/sendMail";
 
 const forgotPasswordGenerateLink = asyncHandler(
     async (req: Request, res: Response) => {
@@ -55,16 +56,24 @@ const forgotPasswordGenerateLink = asyncHandler(
             }
         );
         const link = `http://127.0.0.1:8000/api/v1/users/new-password/${userFromDb.id}/${token}`;
+        try {
+            const emailSent = await sendMail(userFromDb.email, link);
+        } catch (err) {
+            return res
+                .status(500)
+                .json(
+                    new ApiError(500, "There was an error try again later", [])
+                );
+        }
         // TODO : send the link via email
         return res.status(200).json(
             new ApiResponse(200, "Email sent", {
                 message:
                     "Check email for a one time usable link to change password. Use it within 15 minutes",
             })
-        ); // NEEDTOUPADTETHISPROPERLY
+        );
     }
 );
-``
 const handleResetToken = asyncHandler(async (req: Request, res: Response) => {
     const { userId, token } = req.params;
     const userData = req.body;
