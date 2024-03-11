@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import { asyncHandler } from "../../../utils/AsyncHandler";
 import { ApiResponse } from "../../../utils/ApiResponse";
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { prisma } from "../../../utils/prisma";
 
 const updateBio = asyncHandler(async (req: Request, res: Response) => {
     const userData = req.body;

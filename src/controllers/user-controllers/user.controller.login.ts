@@ -1,15 +1,13 @@
 import { Request, Response } from "express";
 import { asyncHandler } from "../../utils/AsyncHandler";
 import { ApiError } from "../../utils/ApiError";
-import { PrismaClient } from "@prisma/client";
 import { comparePassword } from "../../utils/hashPassword";
 import {
     generateAccessToken,
     generateRefreshToken,
 } from "../../utils/generateTokens";
 import { ApiResponse } from "../../utils/ApiResponse";
-
-const prisma = new PrismaClient();
+import { prisma } from "../../utils/prisma";
 
 const login = asyncHandler(async (req: Request, res: Response) => {
     const userData = {

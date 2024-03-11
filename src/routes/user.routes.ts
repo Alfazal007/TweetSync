@@ -5,6 +5,7 @@ import { login } from "../controllers/user-controllers/user.controller.login";
 import { updateFullName } from "../controllers/user-controllers/update-user/user.controller.fullName";
 import { isLoggedIn } from "../middlewares/auth.middleware";
 import { updateBio } from "../controllers/user-controllers/update-user/user.controller.bio";
+import { updateProfile } from "../controllers/user-controllers/update-user/user.controller.profile";
 const userRouter = Router();
 
 userRouter.route("/register").post(
@@ -18,4 +19,7 @@ userRouter.route("/register").post(
 userRouter.route("/login").post(login);
 userRouter.route("/update-fullname").put(isLoggedIn, updateFullName);
 userRouter.route("/update-bio").put(isLoggedIn, updateBio);
+userRouter
+    .route("/update-profile")
+    .put(isLoggedIn, upload.single("profile"), updateProfile);
 export { userRouter };

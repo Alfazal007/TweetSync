@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { asyncHandler } from "../../utils/AsyncHandler";
 import { ApiResponse } from "../../utils/ApiResponse";
 import { registerUserSchema } from "../../utils/ZodValidators";
-import { PrismaClient } from "@prisma/client";
 import { ApiError } from "../../utils/ApiError";
 import { uploadOnCloudinary } from "../../utils/uploadToCloudinary";
 import { deleteFromCloudinary } from "../../utils/deleteFromCloudinary";
@@ -11,8 +10,8 @@ import {
     generateRefreshToken,
 } from "../../utils/generateTokens";
 import { generateHashPassword } from "../../utils/hashPassword";
-
-const prisma = new PrismaClient();
+import { prisma } from "../../utils/prisma";
+import fs from "fs";
 
 const createUser = asyncHandler(async (req: Request, res: Response) => {
     const userData = {
@@ -58,6 +57,19 @@ const createUser = asyncHandler(async (req: Request, res: Response) => {
         let profilePicPath = files[0].path;
         const profilePicResponse = await uploadOnCloudinary(profilePicPath);
         if (profilePicResponse == null) {
+            if (
+                req.files &&
+                (Array.isArray(req.files) ||
+                    (typeof req.files === "object" &&
+                        req.files.banner &&
+                        Array.isArray(req.files.banner) &&
+                        req.files.banner.length > 0))
+            ) {
+                const banner = Array.isArray(req.files)
+                    ? req.files
+                    : req.files.banner;
+                fs.unlinkSync(banner[0].path);
+            }
             return res
                 .status(500)
                 .json(new ApiError(500, `Failed to upload profile picture`));
