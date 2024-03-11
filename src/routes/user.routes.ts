@@ -9,6 +9,10 @@ import { updateProfile } from "../controllers/user-controllers/update-user/user.
 import { updateBanner } from "../controllers/user-controllers/update-user/user.controller.banner";
 import { changePassword } from "../controllers/user-controllers/update-user/user.controller.changePassword";
 import { logout } from "../controllers/user-controllers/user.controller.logout";
+import {
+    forgotPasswordGenerateLink,
+    handleResetToken,
+} from "../controllers/user-controllers/user.controller.forgot-password";
 const userRouter = Router();
 
 userRouter.route("/register").post(
@@ -18,7 +22,6 @@ userRouter.route("/register").post(
     ]),
     createUser
 );
-
 userRouter.route("/login").post(login);
 userRouter.route("/update-fullname").put(isLoggedIn, updateFullName);
 userRouter.route("/update-bio").put(isLoggedIn, updateBio);
@@ -28,7 +31,9 @@ userRouter
 userRouter
     .route("/update-banner")
     .put(isLoggedIn, upload.single("banner"), updateBanner);
-
 userRouter.route("/change-password").put(isLoggedIn, changePassword);
 userRouter.route("/logout").post(isLoggedIn, logout);
+userRouter.route("/forgot-password").post(forgotPasswordGenerateLink);
+userRouter.route("/new-password/:userId/:token").post(handleResetToken);
+
 export { userRouter };

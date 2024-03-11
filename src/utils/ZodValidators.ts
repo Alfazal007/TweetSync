@@ -11,5 +11,7 @@ const registerUserSchema = z.object({
     bio: z.string().min(5),
     isVerified: z.boolean(),
 });
-
-export { registerUserSchema };
+const emailType = z.string().email();
+const usernameType = z.string().min(4);
+const passwordType = z.string().min(6);
+export { registerUserSchema, emailType, usernameType, passwordType };
