@@ -6,6 +6,8 @@ import { updateFullName } from "../controllers/user-controllers/update-user/user
 import { isLoggedIn } from "../middlewares/auth.middleware";
 import { updateBio } from "../controllers/user-controllers/update-user/user.controller.bio";
 import { updateProfile } from "../controllers/user-controllers/update-user/user.controller.profile";
+import { updateBanner } from "../controllers/user-controllers/update-user/user.controller.banner";
+import { changePassword } from "../controllers/user-controllers/update-user/user.controller.changePassword";
 const userRouter = Router();
 
 userRouter.route("/register").post(
@@ -22,4 +24,9 @@ userRouter.route("/update-bio").put(isLoggedIn, updateBio);
 userRouter
     .route("/update-profile")
     .put(isLoggedIn, upload.single("profile"), updateProfile);
+userRouter
+    .route("/update-banner")
+    .put(isLoggedIn, upload.single("banner"), updateBanner);
+
+userRouter.route("/change-password").put(isLoggedIn, changePassword);
 export { userRouter };
