@@ -14,6 +14,8 @@ import {
     handleResetToken,
 } from "../controllers/user-controllers/user.controller.forgot-password";
 import { deleteUser } from "../controllers/user-controllers/user.controller.delete.-user";
+import { getUserById } from "../controllers/user-controllers/user.controller.findById";
+import { getUserByUsername } from "../controllers/user-controllers/user.controller.findByUsername";
 const userRouter = Router();
 
 userRouter.route("/register").post(
@@ -37,5 +39,9 @@ userRouter.route("/logout").post(isLoggedIn, logout);
 userRouter.route("/forgot-password").post(forgotPasswordGenerateLink);
 userRouter.route("/new-password/:userId/:token").post(handleResetToken);
 userRouter.route("/delete").delete(isLoggedIn, deleteUser);
+userRouter.route("/get-user/:id").get(isLoggedIn, getUserById);
+userRouter
+    .route("/get-user/username/:username")
+    .get(isLoggedIn, getUserByUsername);
 
 export { userRouter };
