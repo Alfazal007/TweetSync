@@ -13,6 +13,7 @@ import {
     forgotPasswordGenerateLink,
     handleResetToken,
 } from "../controllers/user-controllers/user.controller.forgot-password";
+import { deleteUser } from "../controllers/user-controllers/user.controller.delete.-user";
 const userRouter = Router();
 
 userRouter.route("/register").post(
@@ -35,5 +36,6 @@ userRouter.route("/change-password").put(isLoggedIn, changePassword);
 userRouter.route("/logout").post(isLoggedIn, logout);
 userRouter.route("/forgot-password").post(forgotPasswordGenerateLink);
 userRouter.route("/new-password/:userId/:token").post(handleResetToken);
+userRouter.route("/delete").delete(isLoggedIn, deleteUser);
 
 export { userRouter };
