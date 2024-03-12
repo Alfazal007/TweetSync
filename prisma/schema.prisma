@@ -37,9 +37,9 @@ model User {
 model Following {
   id          String @id @default(uuid())
   followersId String
-  followers   User   @relation("WhoFollowMe", references: [id], fields: [followersId])
+  followers   User   @relation("WhoFollowMe", references: [id], fields: [followingId], onDelete: Cascade)
   followingId String
-  following   User   @relation("WhoIFollow", references: [id], fields: [followingId])
+  following   User   @relation("WhoIFollow", references: [id], fields: [followersId], onDelete: Cascade)
 }
 
 model Tweet {
@@ -48,7 +48,7 @@ model Tweet {
   image      String?
   video      String?
   authorId   String
-  author     User         @relation(references: [id], fields: [authorId])
+  author     User         @relation(references: [id], fields: [authorId], onDelete: Cascade)
   Replytweet Replytweet[]
   Likestweet Likestweet[]
 }
@@ -57,9 +57,9 @@ model Replytweet {
   id         String       @id @default(uuid())
   content    String
   tweetId    String
-  tweet      Tweet        @relation(references: [id], fields: [tweetId])
+  tweet      Tweet        @relation(references: [id], fields: [tweetId], onDelete: Cascade)
   userId     String
-  user       User         @relation(references: [id], fields: [userId])
+  user       User         @relation(references: [id], fields: [userId], onDelete: Cascade)
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   LikesReply LikesReply[]
@@ -68,15 +68,15 @@ model Replytweet {
 model Likestweet {
   id      String @id @default(uuid())
   tweetId String
-  tweet   Tweet  @relation(references: [id], fields: [tweetId])
+  tweet   Tweet  @relation(references: [id], fields: [tweetId], onDelete: Cascade)
   userId  String
-  user    User   @relation(references: [id], fields: [userId])
+  user    User   @relation(references: [id], fields: [userId], onDelete: Cascade)
 }
 
 model LikesReply {
   id      String     @id @default(uuid())
   replyId String
-  reply   Replytweet @relation(references: [id], fields: [replyId])
+  reply   Replytweet @relation(references: [id], fields: [replyId], onDelete: Cascade)
   userId  String
-  user    User       @relation(references: [id], fields: [userId])
+  user    User       @relation(references: [id], fields: [userId], onDelete: Cascade)
 }

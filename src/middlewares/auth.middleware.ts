@@ -38,20 +38,15 @@ const isLoggedIn = asyncHandler(
                 process.env.ACCESSTOKENSECRET || ""
             ) as JwtPayload;
         } catch (error) {
-            if (!userInfo) {
-                return res
-                    .status(403)
-                    .json(
-                        new ApiError(
-                            403,
-                            "Forbidden request! Re-login Invalid jwt"
-                        )
-                    );
-            }
+            return res
+                .status(403)
+                .json(
+                    new ApiError(403, "Forbidden request! Re-login Invalid jwt")
+                );
         }
         const userOfThisToken = await prisma.user.findFirst({
             where: {
-                id: userInfo.id,
+                AND: [{ id: userInfo.id }, { email: userInfo.email }],
             },
             select: {
                 id: true,
@@ -59,6 +54,7 @@ const isLoggedIn = asyncHandler(
                 email: true,
             },
         });
+
         if (!userOfThisToken) {
             return res
                 .status(403)

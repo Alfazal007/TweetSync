@@ -29,4 +29,7 @@ app.use(cookieParser()); // get cookies from browser and also to set it
 import { userRouter } from "./routes/user.routes";
 app.use("/api/v1/users", userRouter);
 
+import { followRouter } from "./routes/following.routes";
+app.use("/api/v1/following", followRouter);
+
 export { app };
