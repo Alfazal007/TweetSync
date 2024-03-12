@@ -16,6 +16,7 @@ import {
 import { deleteUser } from "../controllers/user-controllers/user.controller.delete.-user";
 import { getUserById } from "../controllers/user-controllers/user.controller.findById";
 import { getUserByUsername } from "../controllers/user-controllers/user.controller.findByUsername";
+import { refreshAccessToken } from "../controllers/user-controllers/user.controller.refreshAccessToken";
 const userRouter = Router();
 
 userRouter.route("/register").post(
@@ -43,5 +44,5 @@ userRouter.route("/get-user/:id").get(isLoggedIn, getUserById);
 userRouter
     .route("/get-user/username/:username")
     .get(isLoggedIn, getUserByUsername);
-
+userRouter.route("/refresh-tokens").post(refreshAccessToken);
 export { userRouter };
