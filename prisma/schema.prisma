@@ -45,8 +45,7 @@ model Following {
 model Tweet {
   id         String       @id @default(uuid())
   content    String
-  image      String?
-  video      String?
+  media      String?
   authorId   String
   author     User         @relation(references: [id], fields: [authorId], onDelete: Cascade)
   Replytweet Replytweet[]

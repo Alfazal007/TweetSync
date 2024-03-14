@@ -32,4 +32,7 @@ app.use("/api/v1/users", userRouter);
 import { followRouter } from "./routes/following.routes";
 app.use("/api/v1/following", followRouter);
 
+import { tweetsRouter } from "./routes/tweets.routes";
+app.use("/api/v1/tweets", tweetsRouter);
+
 export { app };

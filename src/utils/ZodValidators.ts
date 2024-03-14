@@ -14,4 +14,17 @@ const registerUserSchema = z.object({
 const emailType = z.string().email();
 const usernameType = z.string().min(4);
 const passwordType = z.string().min(6);
-export { registerUserSchema, emailType, usernameType, passwordType };
+
+const tweetCreateSchema = z.object({
+    content: z.string(),
+    media: z.string().optional(),
+    authorId: z.string(),
+});
+
+export {
+    registerUserSchema,
+    emailType,
+    usernameType,
+    passwordType,
+    tweetCreateSchema,
+};
