@@ -35,6 +35,19 @@ const getFollowingTweets = asyncHandler(async (req: Request, res: Response) => {
                 in: followings,
             },
         },
+        select: {
+            authorId: true,
+            content: true,
+            media: true,
+            id: true,
+            createdAt: true,
+            _count: {
+                select: {
+                    Replytweet: true,
+                    Likestweet: true,
+                },
+            },
+        },
         orderBy: {
             createdAt: "desc",
         },

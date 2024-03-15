@@ -12,7 +12,9 @@ tweetsRouter
     .post(isLoggedIn, upload.single("media"), createTweet);
 
 tweetsRouter.route("/delete").delete(isLoggedIn, deleteTweet);
-tweetsRouter.route("/user/:userId").get(isLoggedIn, getUserTweets);
+tweetsRouter
+    .route("/user/:userId/offset/:offset/limit/:limit")
+    .get(isLoggedIn, getUserTweets);
 tweetsRouter
     .route("/user-following/offset/:offset/limit/:limit")
     .get(isLoggedIn, getFollowingTweets);
