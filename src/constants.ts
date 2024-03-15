@@ -2,4 +2,4 @@
 // docker exec -it  e282d1b7758c psql -U postgres postgres
 // npx prisma migrate dev --name reinit
 // TODO::VERIFY EMAIL WHILE REGISTERING THE USER
-// TODO::CHECK GET USER BY EMAIL AND ID TO SEE FOLLOWERS AND TWEETS
+// TODO::GET ALL USER'S TWEETS WHOM YOU FOLLOW

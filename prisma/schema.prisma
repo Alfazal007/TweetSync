@@ -50,6 +50,8 @@ model Tweet {
   author     User         @relation(references: [id], fields: [authorId], onDelete: Cascade)
   Replytweet Replytweet[]
   Likestweet Likestweet[]
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
 }
 
 model Replytweet {
