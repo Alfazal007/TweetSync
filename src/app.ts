@@ -35,4 +35,7 @@ app.use("/api/v1/following", followRouter);
 import { tweetsRouter } from "./routes/tweets.routes";
 app.use("/api/v1/tweets", tweetsRouter);
 
+import { likeTweetRouter } from "./routes/likes.routes";
+app.use("/api/v1/like-tweet", likeTweetRouter);
+
 export { app };
