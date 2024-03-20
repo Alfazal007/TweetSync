@@ -21,7 +21,21 @@ const getTweetFromId = asyncHandler(async (req: Request, res: Response) => {
                     Likestweet: true,
                 },
             },
-            Replytweet: true,
+            Replytweet: {
+                select: {
+                    content: true,
+                    id: true,
+                    tweetId: true,
+                    userId: true,
+                    createdAt: true,
+                    updatedAt: true,
+                    _count: {
+                        select: {
+                            LikesReply: true,
+                        },
+                    },
+                },
+            },
             author: {
                 select: {
                     fullName: true,
